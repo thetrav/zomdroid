@@ -3,6 +3,7 @@ package the.trav.zomdroid
 case class Color(a:Int, r:Int, g:Int, b:Int)
 
 case object Black extends Color(255, 0,0,0)
+case object White extends Color(255, 255,255,255)
 case object Orange extends Color(255, 250,150,0)
 case object Red extends Color(255, 255,0,0)
 case object Green extends Color(255, 0,255,0)

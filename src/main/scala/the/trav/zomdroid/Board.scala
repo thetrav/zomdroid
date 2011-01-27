@@ -81,7 +81,8 @@ case class Board(moves:Int, player:Player, zombies:Map[Coord, Zombie], exit:Coor
 
   def drawPlayerView(canvas:Canvas) {
     def drawViewedTile(c:Coord) {
-      val hex = Hex(c)
+      val offsetCoord = c - player.c
+      val hex = Hex(offsetCoord)
       hex.fillCircle(canvas, Gray)
       if(hasWall(c)) hex.fillCircle(canvas, walls(c).color)
       if(hasZombie(c)) hex.fillHalfCircle(canvas, Red)

@@ -7,7 +7,7 @@ import android.graphics._
 case class Hex(c:Coord) {
   def i = c.x
   def j = c.y
-  def size = canvasSize.y / gridSize
+  def size = canvasSize.y / playerViewCircumference
   def r = size / 2
   def w = size
   def height = 3 * r / twoTimesSinSixtyDeg
@@ -39,6 +39,6 @@ case class Hex(c:Coord) {
 
   def fillHalfCircle(c:Canvas, color:Color) {
     setPaint(color)
-    c.drawOval(new RectF(x+w/4, y+h/4, x+w/2, y+h/2), paint)
+    c.drawOval(new RectF(x+w/4, y+h/4, x+w/2+w/4, y+h/2+h/4), paint)
   }
 }

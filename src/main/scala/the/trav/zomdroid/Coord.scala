@@ -36,6 +36,8 @@ case class Coord(x:Int, y:Int) {
 
   def +(c:Coord)  = Coord(x + c.x, y + c.y)
 
+  def -(c:Coord)  = Coord(x - c.x, y - c.y)
+
   def isEvenRow = y % 2 == 0
 
 
