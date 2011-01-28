@@ -11,6 +11,10 @@ object Color {
 
   def white = color(255, 255,255,255)
   def green = color(255, 0  ,255,0  )
+  def red   = color(255, 255,0  ,0  )
+  def darkRed=color(255, 100,0  ,0  )
+  def orange =color(255, 250,150,0  )
+  def brown = color(255, 110,80 ,30 )
 }
 
 case class Color(a:Int, r:Int, g:Int, b:Int)

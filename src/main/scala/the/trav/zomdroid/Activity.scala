@@ -183,7 +183,16 @@ class MainActivity extends Activity {
   def drawStatus(canvas:Canvas) {
     val paint = new Paint()
     paint.setARGB(255,255,255,255)
-    canvas.drawText(consoleText, 10, canvasSize.y + 10, paint)
+    val offset = dimensions match {
+      case LandscapeDimensions(_) => Coord(canvasSize.x, 10)
+      case PortraitDimensions(_) => Coord(10, canvasSize.y)
+      case _ => ORIGIN
+    }
+    canvas.translate(offset.x, offset.y)
+    canvas.drawText(consoleText, 10, 10, paint)
+    BarWidget(Color.red, Color.red, Color.darkRed, "HP", board.player.health, playerStartHealth, Coord(10,30)).draw(canvas)
+    BarWidget(Color.orange, Color.orange, Color.brown, "Food", board.player.food, playerStartFood, Coord(10,50)).draw(canvas)
+    canvas.translate(-offset.x, -offset.y)
   }
   
   def drawControls(canvas:Canvas) {
@@ -195,6 +204,21 @@ class MainActivity extends Activity {
     drawLine(0, southInputBoundary, canvasSize.x, southInputBoundary)
     drawLine(0, statusNorthBoundary, canvasSize.x, statusNorthBoundary)
     drawLine(westInputBoundary, 0, westInputBoundary, canvasSize.y)
+  }
+}
+
+case class BarWidget(labelColor:Paint, fillColor:Paint, borderColor:Paint, label:String, value:Int, max:Int, pos:Coord) {
+  def draw(canvas:Canvas) {
+    canvas.translate(pos.x, pos.y)
+    canvas.drawText(label+value, 10, 25, labelColor)
+    val percentage = value.toDouble / max.toDouble
+    val x = 82
+    val y = 12
+    val width = 100
+    val height = 15
+    canvas.drawRect(x, y, x+width, y+height, borderColor)
+    canvas.drawRect(x+1, y+1, x-1+(width*percentage).asInstanceOf[Int], y-1+height, fillColor)
+    canvas.translate(-pos.x, -pos.y)
   }
 }
 

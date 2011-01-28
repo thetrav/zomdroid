@@ -59,10 +59,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Activity.scala" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Activity.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Activity.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="3" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
+            <state line="188" column="22" selection-start="4417" selection-end="4417" vertical-scroll-proportion="0.34285715">
               <folding />
             </state>
           </provider>
@@ -122,10 +122,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dimensions.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Dimensions.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Dimensions.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="40" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.94285715">
+            <state line="44" column="40" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -134,7 +134,7 @@
       <file leaf-file-name="Color.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Color.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="37" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+            <state line="16" column="36" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -154,12 +154,12 @@
         <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Coord.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Hex.scala" />
         <option value="$PROJECT_DIR$/src/main/res/menu/game_menu.xml" />
-        <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Color.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Scales.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Activity.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Constants.scala" />
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Dimensions.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Color.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Activity.scala" />
       </list>
     </option>
   </component>
@@ -594,23 +594,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Color.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="37" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/lib/android-sdk-mac_86/platforms/android-9/android.jar!/android/graphics/Canvas.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="127" column="16" selection-start="5306" selection-end="5306" vertical-scroll-proportion="0.348659">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Activity.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="3" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -622,13 +608,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Hex.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="46" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Constants.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="32" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
@@ -636,9 +615,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Color.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="36" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Hex.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="46" selection-start="379" selection-end="379" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Dimensions.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="40" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.94285715">
+        <state line="44" column="40" selection-start="1303" selection-end="1303" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/the/trav/zomdroid/Activity.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="22" selection-start="4417" selection-end="4417" vertical-scroll-proportion="0.34285715">
           <folding />
         </state>
       </provider>
