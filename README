@@ -1,0 +1,5 @@
+Commands so I don't forget them:
+
+Build => sbt package-debug
+Deploy to emulator => sbt reinstall-emulator (make sure emulator is running)
+Deploy to phone => /path.to.sdk/platform-tools/adb -d install -r /path.to.project.deploy/package.apk (make sure phone is plugged in)
