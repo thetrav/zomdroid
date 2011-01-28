@@ -8,21 +8,17 @@ import _root_.android.content._
 import the.trav.zomdroid.Constants._
 import the.trav.zomdroid._
 
-case class DrawView(context: Context, parent:MainActivity) extends View(context) {
+class DrawView(context: Context, parent:MainActivity) extends View(context) {
 
-  var mousePos = Coord(0,0)
   override def onDraw(canvas:Canvas) {
-    parent.board.draw(canvas)
-    val paint = new Paint()
-    paint.setARGB(255,255,255,255)
-    canvas.drawText("mousePos:"+mousePos, 10, 310, paint)
-//Hex(Coord(0,0)).fillCircle(canvas, Red)
- //Hex(Coord(1,0)).fillCircle(canvas, White)
-  //Hex(Coord(-1,0)).fillCircle(canvas, Blue)
-   //Hex(Coord(0,1)).fillCircle(canvas, Green)
-  //Hex(Coord(0,-1)).fillCircle(canvas, Orange)
-  
+    val frame = Coord(canvas.getWidth, canvas.getHeight)
+    if(frame.x > frame.y) {
+      dimensions = LandscapeDimensions(frame)
+    } else {
+      dimensions = PortraitDimensions(frame)
     }
+    parent.draw(canvas)
+  }
 
   override def onTouchEvent(event:MotionEvent) = {
     val action = event.getAction()
@@ -30,9 +26,6 @@ case class DrawView(context: Context, parent:MainActivity) extends View(context)
     val y = event.getY()
     action match {
       case MotionEvent.ACTION_UP => {
-        //work out direction and trigger action
-        println("action_up at:"+x+","+y)
-        mousePos = Coord(x.asInstanceOf[Int], y.asInstanceOf[Int])
         parent.handleAction(x, y)
       }
       case _ => {
@@ -49,15 +42,42 @@ class MainActivity extends Activity {
   var numZombies = initialZombies
 
   var board = newBoard(numZombies)
+
+  var consoleText = ">"
+
+  var refreshView = () => {}
   
   override def onCreate(savedInstanceState: Bundle) {
     super.onCreate(savedInstanceState)
-    setContentView(DrawView(getApplicationContext(), this)) 
-    
+    val view = new DrawView(getApplicationContext(), this)
+    setContentView(view)
+    refreshView = () => {view.invalidate()}
+  }
+
+  override def onCreateOptionsMenu(menu:Menu) = {
+    val inflater = getMenuInflater()
+    inflater.inflate(R.menu.game_menu, menu)
+    true
+  }
+
+  override def onOptionsItemSelected(item:MenuItem) = {
+    item.getItemId() match {
+      case R.id.toggle_coords => {
+        showCoords = !showCoords
+      }
+      case R.id.toggle_controls => {
+        showControls = !showControls
+      }
+      case _ => {
+
+      }
+    }
+    refreshView()
+    true
   }
 
   def showMessage(msg:String) {
-    println("message="+msg)
+    consoleText = ">" + msg
   }
 
   def handleCommand(d:Direction) {
@@ -131,10 +151,6 @@ class MainActivity extends Activity {
   }
 
   def findDir(x:Float, y:Float) = {
-    val westInputBoundary = 145
-    val northInputBoundary = 100
-    val southInputBoundary = 200
-    val statusNorthBoundary = 300
     if (y < statusNorthBoundary) {
       if (x < westInputBoundary) {
         if ( y < northInputBoundary) {
@@ -156,6 +172,29 @@ class MainActivity extends Activity {
     } else {
       None
     }
+  }
+  
+  def draw(canvas:Canvas) {
+    board.draw(canvas)
+    drawStatus(canvas)
+    if(showControls) drawControls(canvas)
+  }
+
+  def drawStatus(canvas:Canvas) {
+    val paint = new Paint()
+    paint.setARGB(255,255,255,255)
+    canvas.drawText(consoleText, 10, canvasSize.y + 10, paint)
+  }
+  
+  def drawControls(canvas:Canvas) {
+    val paint = Color.green
+    def drawLine(x1:Double, y1:Double, x2:Double, y2:Double) {
+      canvas.drawLine(x1.asInstanceOf[Float], y1.asInstanceOf[Float], x2.asInstanceOf[Float], y2.asInstanceOf[Float], paint)
+    }
+    drawLine(0, northInputBoundary, canvasSize.x, northInputBoundary)
+    drawLine(0, southInputBoundary, canvasSize.x, southInputBoundary)
+    drawLine(0, statusNorthBoundary, canvasSize.x, statusNorthBoundary)
+    drawLine(westInputBoundary, 0, westInputBoundary, canvasSize.y)
   }
 }
 

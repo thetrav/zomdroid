@@ -25,16 +25,28 @@ object Constants {
   val zombieDamage = 5
 
   val showAllZombies = false
-  val showCoords = false
+  var showCoords = false
+  var showControls = false
+
+  //sizes
 
   val twoTimesSinSixtyDeg = 2 * Math.sin(Math.toRadians(60))
-  val frameSize = Coord(200, 300)
-  val statusSize = Coord(200, frameSize.y)
-  val canvasSize = Coord(frameSize.x, frameSize.y)
+  var dimensions:Dimensions = PortraitDimensions(Coord(200, 300))
+  def frameSize = dimensions.frameSize
+  def statusSize = dimensions.statusSize
+  def canvasSize = dimensions.canvasSize
 
-  val xOffset = canvasSize.x/2+25
-  val yOffset = canvasSize.y/2
 
-  val title = "zombocalypse"
+  def hexSize = dimensions.hexSize
+  def hexRadius = dimensions.hexSize
+  def hexWidth = dimensions.hexWidth
+  def hexHeight = dimensions.hexHeight
 
+  def xOffset = dimensions.xOffset
+  def yOffset = dimensions.yOffset
+
+  def westInputBoundary = canvasSize.x / 2
+  def northInputBoundary = yOffset
+  def southInputBoundary = yOffset + hexHeight
+  def statusNorthBoundary = canvasSize.y
 }

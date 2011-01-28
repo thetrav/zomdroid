@@ -10,7 +10,7 @@ case class Player(c:Coord, food:Int, health:Int) {
 
   def getCircle(r:Int) = c.getCircle(r)
   def draw(canvas:Canvas) {
-    val hex = Hex(c)
+    val hex = Hex(Coord(0,0))
     hex.fillHalfCircle(canvas, Black)
     if(showCoords) hex.drawCoords(canvas)
   }

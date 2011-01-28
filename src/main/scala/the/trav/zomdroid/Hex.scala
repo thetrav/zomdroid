@@ -7,14 +7,10 @@ import android.graphics._
 case class Hex(c:Coord) {
   def i = c.x
   def j = c.y
-  def size = canvasSize.y / playerViewCircumference
-  def r = size / 2
-  def w = size
-  def height = 3 * r / twoTimesSinSixtyDeg
-  def h = height.asInstanceOf[Int]
-  def yOff = if(j % 2 == 0) 1 else 0
-  def xCoord = (2*i- yOff + 1) * w/2
-  def yCoord = (j + 2/3) * height
+  def h = hexHeight.asInstanceOf[Int]
+  def w = hexWidth
+  def xCoord = (2*i - j + 1) * hexWidth/2
+  def yCoord = (j + 2/3) * hexHeight
   def x = xCoord.asInstanceOf[Int] + xOffset
   def y = yCoord.asInstanceOf[Int] + yOffset
   val paint = new Paint() 

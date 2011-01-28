@@ -22,17 +22,14 @@ object Coord {
   }
 
   def adjacentPositions(pos:Coord) = {
-    if (pos.isEvenRow) {
-      pos(-1,-1) :: pos(0,-1) :: pos(1,0) :: pos(0,1) :: pos(-1,1) :: pos(-1,0) :: List[Coord]()
-    } else {
-      pos(0,-1) :: pos(1,-1) :: pos(1,0) :: pos(1,1) :: pos(0,1) :: pos(-1,0) :: List[Coord]()
-    }
+      pos(NE) :: pos(E) :: pos(SE) :: pos(SW) :: pos(W) :: pos(NW) :: List[Coord]()
   }
 }
 
 case class Coord(x:Int, y:Int) {
 
   def apply(xMod:Int, yMod:Int) = this + Coord(xMod, yMod)
+  def apply(d:Direction) = this + this.direction(d)
 
   def +(c:Coord)  = Coord(x + c.x, y + c.y)
 
@@ -49,12 +46,12 @@ case class Coord(x:Int, y:Int) {
   def getCircle(r:Int) = Coord.getCircle(this, r)
 
   def direction(d:Direction) = d match {
-      case NE => new Coord(if(isEvenRow) 0 else 1, -1)
+      case NE => new Coord(0, -1)
       case E => new Coord(1, 0)
-      case SE => new Coord(if(isEvenRow) 0 else 1, 1)
-      case SW => new Coord(if(isEvenRow) -1 else 0, 1)
+      case SE => new Coord(1, 1)
+      case SW => new Coord(0, 1)
       case W => new Coord(-1, 0)
-      case NW => new Coord(if(isEvenRow) -1 else 0, -1)
+      case NW => new Coord(-1, -1)
       case NO_DIRECTION => ORIGIN
   }
 }
