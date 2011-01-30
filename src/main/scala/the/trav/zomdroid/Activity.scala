@@ -30,7 +30,6 @@ class DrawView(context: Context, parent:MainActivity) extends View(context) {
         //do nothing
       }
     }
-    invalidate()
     true
   }
 }
@@ -41,6 +40,7 @@ class MainActivity extends Activity {
     super.onCreate(savedInstanceState)
     Actors.simulationActor ! SetGameStateCommand(Game.newBoard(initialZombies))
     val view = new DrawView(getApplicationContext(), this)
+    GlobalDrawingFunctions.refreshFunction = view.postInvalidate
     setContentView(view)
   }
 
