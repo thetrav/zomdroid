@@ -2,18 +2,12 @@ package the.trav.zomdroid
 
 import the.trav.zomdroid._
 import Constants._
-import android.graphics._
 
 case class Player(c:Coord, food:Int, health:Int) {
   def apply(newPos:Coord) = Player(newPos, food, health)
   def apply(newPos:Coord, foodChange:Int, healthChange:Int) = Player(newPos, food+foodChange, health+healthChange)
 
   def getCircle(r:Int) = c.getCircle(r)
-  def draw(canvas:Canvas) {
-    val hex = Hex(Coord(0,0))
-    hex.fillHalfCircle(canvas, Black)
-    if(showCoords) hex.drawCoords(canvas)
-  }
 
   def takeHit(damage:Int) = Player(c, food, health - damage)
 
@@ -58,56 +52,25 @@ case class Board(moves:Int, player:Player, zombies:Map[Coord, Zombie], exit:Coor
     NO_DIRECTION
   }
 
-  def draw(canvas:Canvas) {
-    drawPlayerView(canvas)
-    drawPlayer(canvas)
-    if(showAllZombies) drawZombies(canvas)
-  }
-
   def hasZombie(c:Coord) = zombies.contains(c)
   def hasWall(c:Coord) = walls.contains(c)
   def hasPlayer(c:Coord) = player.c == c
 
-  def addZombie(c:Coord) = this(zombies + (c -> Zombie()))
+  def addZombie(c:Coord) = this(zombies + (c -> new Zombie()))
   def addWall(c:Coord, color:Color) = Board(moves, player, zombies, exit, walls + (c->Wall(color)))
 
-  def drawZombies(canvas:Canvas) {
-    zombies.foreach((t:(Coord, Zombie)) => {
-      val hex = Hex(t._1)
-      hex.fillHalfCircle(canvas, Red)
-      if(showCoords) hex.drawCoords(canvas)
-    })
-  }
 
-  def drawPlayerView(canvas:Canvas) {
-    def drawViewedTile(c:Coord) {
-      val offsetCoord = c - player.c
-      val hex = Hex(offsetCoord)
-      hex.fillCircle(canvas, Gray)
-      if(hasWall(c)) hex.fillCircle(canvas, walls(c).color)
-      if(hasZombie(c)) hex.fillHalfCircle(canvas, Red)
-      if(c == exit) hex.fillHalfCircle(canvas, Green)
-      if(showCoords) hex.drawCoords(canvas)
-    }
-    player.getCircle(playerViewDistance).foreach(drawViewedTile)
-  }
-
-  def drawPlayer(canvas:Canvas) {
-    player.draw(canvas)
-  }
 
   def movePlayer(d:Direction):MoveResult = {
     val newPos = player.go(d, 1)
     if(hasZombie(newPos)) {
-      attackZombie(newPos).simulateZombies()
+      Attacked(newPos, this.attackZombie(newPos))
     } else if (newPos == exit) {
       Escaped
     } else if (hasWall(newPos)) {
       Blocked
-    } else if (player.food == 1){
-      Starved
     } else {
-      this(player(newPos, -foodUsedPerMove, 0)).simulateZombies()
+      Moved(this(player(newPos, -foodUsedPerMove, 0)))
     }
   }
 
@@ -115,30 +78,37 @@ case class Board(moves:Int, player:Player, zombies:Map[Coord, Zombie], exit:Coor
 
   def attackPlayer() = Board(moves, player.takeHit(zombieDamage), zombies, exit, walls)
 
-  def moveZombie(c:Coord, d:Direction) = {
+  def moveZombie(c:Coord, d:Direction):MoveResult = {
     c.getCircle(zombieViewDistance).find((pos:Coord)=> hasPlayer(pos)) match {
       case Some(_) => {
         val newPos = c.go(d, 1)
         if(hasWall(newPos)) {
-          this
+          Blocked
         } else if(hasPlayer(newPos)) {
-          attackPlayer()
+          Attacked(newPos, attackPlayer())
         } else if(hasZombie(newPos)) {
-          this
+          Blocked
         } else {
-          this(zombies - c + (newPos-> Zombie()))
+          Moved(this(zombies - c + (newPos-> new Zombie())))
         }
       }
-      case None => this
+      case None => Blocked
     }
   }
 
-  def simulateZombies() = {
-    def moveZombie(b:Board, z:Coord) = {
-      b.moveZombie(z, direction(z, b.player.c))
+  def simulateZombies():List[MoveResult] = {
+    def moveZombie(bl:List[MoveResult], z:Coord):List[MoveResult] = {
+      val b = bl.head match {
+        case Moved(board) => board
+        case Attacked(_, board) => board
+      }
+      val moveResult = b.moveZombie(z, direction(z, b.player.c))
+      moveResult match {
+        case Blocked => bl
+        case x:MoveResult => x :: bl
+      }
     }
 
-    val b = zombies.keySet.foldLeft[Board](this)(moveZombie)
-    if (player.health <= 0) Eaten else Moved(b)
+    zombies.keySet.foldLeft[List[MoveResult]](List[MoveResult](Moved(this)))(moveZombie)
   }
 }

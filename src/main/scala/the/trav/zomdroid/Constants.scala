@@ -28,6 +28,12 @@ object Constants {
   var showCoords = false
   var showControls = false
 
+  //animation controls
+  val zombieMoveTime = 100
+  val playerMoveTime = zombieMoveTime
+  val attackTime = 100
+  val gameOverDisplayTime = 1000
+
   //sizes
 
   val twoTimesSinSixtyDeg = 2 * Math.sin(Math.toRadians(60))

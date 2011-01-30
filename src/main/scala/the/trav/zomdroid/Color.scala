@@ -27,4 +27,5 @@ case object Green extends Color(255, 0,255,0)
 case object Blue extends Color(255, 0,0,255)
 case object Gray extends Color(255, 200,200,200)
 case object DarkGray extends Color(255, 150,150,150)
+case object Yellow extends Color(255, 255,255,0  )
 
