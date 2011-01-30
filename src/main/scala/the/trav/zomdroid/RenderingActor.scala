@@ -5,7 +5,6 @@ import actors.Actor._
 import Constants._
 import android.graphics.{Paint, Canvas}
 import RenderingOperations.DrawFunction
-import android.util.Log
 
 object GlobalDrawingFunctions {
   var drawFunction = (canvas:Canvas) => {}
@@ -34,15 +33,16 @@ class RenderingActor() extends Actor {
     loop {
       receive {
         case DisplayScene(f) => {
-          Log.i("ZOMDROID", "received DisplayScene command")
+          log("received DisplayScene command")
           draw(f)
           Actors.inputActor ! AcceptInput
         }
         case DisplayTemporaryScene(f, t) => {
-          Log.i("ZOMDROID", "received temporary scene to display for" + t + " milliseconds")
+          log("received temporary scene to display for" + t + " milliseconds")
           draw(f)
+          Yield.doYield()
           Thread.sleep(t)
-          Log.i("ZOMDROID", "finished displaying, checking for next to display")
+          log("finished displaying, checking for next to display")
         }
         case _ => exit()
       }
@@ -58,7 +58,9 @@ object RenderingOperations {
 
   }
 
-  def drawAttack(canvas:Canvas, coord:Coord) {
+  def drawAttack(canvas:Canvas, gameState:Game, coord:Coord) {
+    log("drawing attack at:"+coord)
+    drawScene(canvas, gameState)
     Hex(coord).fillCircle(canvas, Yellow)
   }
 

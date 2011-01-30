@@ -27,9 +27,9 @@ class SimulationActor() extends Actor {
           Actors.renderingActor ! DisplayScene(RenderingOperations.drawScene(_, game))
         }
         case MoveCommand(d) => {
-          Log.i("ZOMDROID", "received player move command")
+          log("received player move command")
           gameState = Some(game.handleMoveCommand(d))
-          Log.i("ZOMDROID", "sending current state to render")
+          log("sending current state to render")
           Actors.renderingActor ! DisplayScene(RenderingOperations.drawScene(_, gameState.get))
         }
         case _ => exit()
@@ -48,12 +48,12 @@ case class Game(board:Board, message:String) {
   def showZombieMove(move:MoveResult) {
     move match {
       case Moved(b) => {
-        Log.i("ZOMDROID", "showing zombie move")
+        log("showing zombie move")
         Actors.renderingActor ! DisplayTemporaryScene(RenderingOperations.drawScene(_, this(b)), zombieMoveTime)
       }
       case Attacked(c, _) => {
-        Log.i("ZOMDROID", "showing zombie attack")
-        Actors.renderingActor ! DisplayTemporaryScene(RenderingOperations.drawAttack(_, c), zombieMoveTime)
+        log("showing zombie attack")
+        Actors.renderingActor ! DisplayTemporaryScene(RenderingOperations.drawAttack(_, this, Coord(0,0)), attackTime)
       }
     }
 
@@ -84,9 +84,9 @@ case class Game(board:Board, message:String) {
       }
       case Attacked(coord:Coord, b:Board) => {
         val newState = this(b)
-        Log.i("ZOMDROID", "sending attack animation frame")
-        Actors.renderingActor ! DisplayTemporaryScene(RenderingOperations.drawAttack(_, coord-b.player.c), attackTime)
-        Log.i("ZOMDROID", "simulating zombies")
+        log("sending attack animation frame")
+        Actors.renderingActor ! DisplayTemporaryScene(RenderingOperations.drawAttack(_, this, coord-b.player.c), attackTime)
+        log("simulating zombies")
         newState.simulateZombies()
       }
       case Blocked => {

@@ -85,10 +85,12 @@ case class Board(moves:Int, player:Player, zombies:Map[Coord, Zombie], exit:Coor
         if(hasWall(newPos)) {
           Blocked
         } else if(hasPlayer(newPos)) {
+          log("zombie attacked player")
           Attacked(newPos, attackPlayer())
         } else if(hasZombie(newPos)) {
           Blocked
         } else {
+          log("zombie moved")
           Moved(this(zombies - c + (newPos-> new Zombie())))
         }
       }

@@ -1,6 +1,7 @@
 package the.trav.zomdroid
 
 import java.util.Random
+import android.util.Log
 
 object Constants {
 
@@ -31,7 +32,7 @@ object Constants {
   //animation controls
   val zombieMoveTime = 100
   val playerMoveTime = zombieMoveTime
-  val attackTime = 100
+  val attackTime = 10
   val gameOverDisplayTime = 1000
 
   //sizes
@@ -55,4 +56,8 @@ object Constants {
   def northInputBoundary = yOffset
   def southInputBoundary = yOffset + hexHeight
   def statusNorthBoundary = canvasSize.y
+
+  def log(s:String) {
+    Log.i("ZOMDROID", s)
+  }
 }
